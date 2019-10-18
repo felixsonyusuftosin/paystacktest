@@ -19,5 +19,21 @@
   "bugs": {
     "url": "https://github.com/felixsonyusuftosin/paystacktest/issues"
   },
-  "homepage": "https://github.com/felixsonyusuftosin/paystacktest#readme"
+  "homepage": "https://github.com/felixsonyusuftosin/paystacktest#readme",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "webpack": "^4.41.2",
+    "webpack-dev-server": "^3.8.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3"
+  }
 }
