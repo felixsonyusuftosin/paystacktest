@@ -1,5 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
+const port =  process.env.port | 3000
 
 module.exports = {
   entry: "./src/index.js",
@@ -13,9 +14,13 @@ module.exports = {
         options: { presets: ["@babel/env"] }
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      }
+        test:/\.(s*)css$/,
+        use: ["style-loader", "css-loader", 'sass-loader']
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [{loader: 'file-loader'}],
+      },
     ]
   },
   resolve: { extensions: ["*", ".js", ".jsx"] },
@@ -26,8 +31,8 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, "public/"),
-    port: precess.env.port,
-    publicPath: "http://localhost:3000/dist/",
+    port,
+    publicPath: `http://localhost:${port}/dist/`,
     hotOnly: true
   },
   plugins: [new webpack.HotModuleReplacementPlugin()]
