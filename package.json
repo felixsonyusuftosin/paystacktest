@@ -1,0 +1,23 @@
+{
+  "name": "paystack-test",
+  "version": "1.0.0",
+  "description": "A challenge for Paystack",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixsonyusuftosin/paystacktest.git"
+  },
+  "keywords": [
+    "paystacktest",
+    "felixson"
+  ],
+  "author": "Felixson Yusuf Tosin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felixsonyusuftosin/paystacktest/issues"
+  },
+  "homepage": "https://github.com/felixsonyusuftosin/paystacktest#readme"
+}
