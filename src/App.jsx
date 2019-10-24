@@ -1,12 +1,12 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { Home } from '@home'
 import 'App.scss'
 
 const App = () => (
-  <Router>
+  <Router basename={process.env.PUBLIC_URL}>
 		<Switch>
 			<Route exact path="/">
 				<Home />
