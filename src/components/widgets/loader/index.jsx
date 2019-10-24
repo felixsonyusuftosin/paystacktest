@@ -1,5 +1,5 @@
 /**
- * @file this was loader and styles were referenced from https://loading.io/css/
+ * @file this  loader and styles were referenced from https://loading.io/css/
  */
 import React from 'react'
 import '@widgets/loader/loader.scss'
