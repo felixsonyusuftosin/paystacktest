@@ -1,6 +1,6 @@
 import React from 'react'
 import { hot } from 'react-hot-loader'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { Home } from '@home'
 import 'App.scss'
