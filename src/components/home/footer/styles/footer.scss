@@ -1,0 +1,41 @@
+@import './dark-theme-footer.scss';
+@import './light-theme-footer.scss';
+@import '../../../../scss/variables.scss';
+
+@mixin footerThemable($theme-name, $theme-map) {
+    .#{$theme-name} {
+        .footer {
+            @include h3;
+            position: relative;
+            bottom: 0px;
+            width: 100%;
+            height: 5%;
+            padding: $no-sizing $small;
+            display: flex;
+            justify-content: flex-end;
+            color: $dark-4;
+            box-sizing: border-box;
+            align-items: center;
+
+            .yellow {
+                color: $yellow;
+            }
+
+        }
+    }
+
+    @each $section,
+    $map in $theme-map {
+
+        @if($section==footer) {
+            .footer {
+                background-color: map-get($map, bg)
+            }
+        }
+
+    }
+
+}
+
+@include footerThemable(light-theme, $light-theme-footer);
+@include footerThemable(dark-theme, $dark-theme-footer);

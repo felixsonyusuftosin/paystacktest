@@ -1,0 +1,80 @@
+@import './variables.scss';
+@import './dark-theme.scss';
+@import './light-theme.scss';
+
+/***
+Table Of Content
+-----------------------
+container 
+    main
+        top
+            selectBar
+            switchContext
+        mid
+            starwars intro
+            entry-message
+        bottom
+           item-list
+           item-details
+    left
+       heading
+       highlights
+       list of recent
+       footer-of-left
+footer:
+    message
+    right-logo
+
+***/
+
+@mixin themable($theme-name, $theme-map) {
+    * {
+        font-family: $main-font;
+    }
+
+    .#{$theme-name} {
+        height: 100%;
+
+        *:focus {
+            outline: none !important;
+            border: none !important;
+            box-shadow: transparent;
+        }
+
+        .container {
+            width: 100%;
+            height: 95%;
+            padding: $no-sizing;
+            display: flex;
+            flex-direction: row;
+            overflow-y: auto;
+
+            .main {
+                height: 95%;
+                width: 85%;
+                margin-left: 15%;
+                min-width: 800px;
+
+            }
+
+
+        }
+
+        @each $section,
+        $map in $theme-map {
+            @if($section==container) {
+                .container {
+                    background-color: map-get($map, bg);
+                }
+            }
+
+            @if($section==bottom) {}
+
+
+        }
+
+    }
+}
+
+@include themable(light-theme, $light-theme);
+@include themable(dark-theme, $dark-theme);

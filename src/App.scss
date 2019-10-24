@@ -1,0 +1,22 @@
+/* App css */
+@import './scss/themable.scss';
+@import './scss/variables.scss';
+
+*{
+    font-size:14px;
+    transition: all 0.2s ease-in;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+}
+body, html, #root { 
+    width:100%;
+    height:100%;
+    margin:0;
+    padding: 0;
+
+}
+
+
+

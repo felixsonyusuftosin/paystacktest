@@ -1,0 +1,6 @@
+@import '../../../../scss/variables.scss';
+
+$dark-theme-select: (colors: (bg: $dark-2, border: transparent, color: $light),
+    top: (color: $light,
+        sub: $dark-8),
+);

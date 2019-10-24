@@ -1,0 +1,6 @@
+@import '../../../../scss/variables.scss';
+
+$dark-theme-footer: (
+    footer: (bg: $dark,
+        color: $light,
+        sub: $dark-8));

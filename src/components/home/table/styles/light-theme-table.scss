@@ -1,0 +1,8 @@
+@import '../../../../scss/variables.scss';
+
+$light-theme-table: (colors: (bg: $light,
+        header: $dark-7,
+        border: $dark-4,
+        color: $dark-2),
+    top: (color: $dark-2,
+        sub: $dark-3));

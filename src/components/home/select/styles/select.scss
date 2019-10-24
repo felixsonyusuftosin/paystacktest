@@ -1,0 +1,125 @@
+@import './dark-theme-select.scss';
+@import './light-theme-select.scss';
+@import '../../../../scss/variables.scss';
+
+
+@mixin selectThemable($theme-name, $theme-map) {
+    .#{$theme-name} {
+        .top {
+            height: 10%;
+            display: flex;
+            padding: $small $medium;
+            box-sizing: border-box;
+            display:flex;
+            justify-content: space-between;
+   
+        .select-bar {
+            width: 75%;
+            height: 100%;
+            .react-dropdown-select-dropdown {
+                position: absolute;
+                left: 0;
+                border: none;
+                width: 500px;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                border-radius: 2px;
+                max-height: 300px;
+                overflow: auto;
+                z-index: 9;
+                box-shadow: none;
+            }
+
+
+            .react-dropdown-select-item.react-dropdown-select-item-disabled {
+                background: #777;
+                color: #ccc;
+                
+            }
+        }
+        .switch-context {
+            width: 23%;
+            height: 100%;
+            display: flex; 
+            justify-content: space-around;
+            
+            align-items: center; 
+            cursor: pointer; 
+            .span{
+                @include span;
+                @include ellipsis;
+                text-transform: uppercase;
+                width: 30%;
+            }   
+
+        }
+    }
+
+        @each $section,
+        $map in $theme-map {
+            @if($section==colors) {
+                .select-bar {
+                    background: map-get($map, bg);
+                    border: solid 1px map-get($map, border);
+                    color: map-get($map, color);
+
+                    .react-dropdown-select-dropdown {
+                        background: map-get($map, bg);
+                        color: map-get($map, color);
+                    }
+
+                    .react-dropdown-select-clear,
+                    .react-dropdown-select-dropdown-handle,
+                    .react-dropdown-select-item,
+                    .react-dropdown-select-input {
+                        color: map-get($map, color);
+                    }
+
+                    .react-dropdown-select-option {
+                        border: 1px solid map-get($map, border);
+                    }
+
+                    .react-dropdown-select-item,
+                    .react-dropdown-select-item.react-dropdown-select-item-selected,
+                    .react-dropdown-select-item.react-dropdown-select-item-active {
+                        color: map-get($map, color);
+                        border-bottom: 1px solid map-get($map, border);
+
+                        :hover {
+                            color: lighten(map-get($map, color), 20%);
+                        }
+                    }
+
+                    .react-dropdown-select-item.react-dropdown-select-item-selected,
+                    .react-dropdown-select-item.react-dropdown-select-item-active {
+                        font-weight: bold;
+                    }
+                }
+            }
+            @if($section==top) {
+                .top{
+                    .switch-context{
+                        color: map-get($map, color)!important;
+                        .selected{
+                            color: $yellow;
+                            .span{
+                             
+                                :hover{ 
+                                    color: lighten(map-get($map, color), 30%);
+                                }
+                            }
+
+                        }
+                        
+
+                    }
+                }
+            }
+
+        }
+    }
+}
+
+@include selectThemable(light-theme, $light-theme-select);
+@include selectThemable(dark-theme, $dark-theme-select);
