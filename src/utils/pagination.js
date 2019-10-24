@@ -31,7 +31,7 @@ export class Paginate {
 			this.pageItems = this.paginatedItems[0]
 			return this.pageItems
 		}
-		const numberOfIterations = Math.ceil(actorsLength / this.pageSize)
+		const numberOfIterations = Math.ceil(actorsLength / this.pageSize ) + 1
 
 		for (let i = 0; i < numberOfIterations; i++) {
 			const page = this.actors.slice(i, i + this.pageSize)

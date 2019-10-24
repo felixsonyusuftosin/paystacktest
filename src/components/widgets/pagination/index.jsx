@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Paginate } from '@utils'
 import '@widgets/pagination/pagination.scss'
 import { useSelector } from 'react-redux'
-import useDeepCompareEffect from 'use-deep-compare-effect'
+
 
 export const Pagination = ({ children, pageSize = 10, onActorsLoaded }) => {
 	const actors = useSelector(

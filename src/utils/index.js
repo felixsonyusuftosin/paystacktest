@@ -12,5 +12,4 @@ export {
 	sortActorsByName,
 	sortActorsByHeight
 } from '@utils/array.manipulation'
-
 export { Paginate } from '@utils/pagination'

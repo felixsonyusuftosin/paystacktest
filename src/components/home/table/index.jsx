@@ -39,14 +39,18 @@ export const Table = () => {
 		totalHeightIn = parseInt(reduced / 25.4, 10)
 		totalHeightft = parseInt(reduced / 30.4, 10)
 	}
+
 	const actorsPending = useSelector(
 		state => state.actorsList.pending,
 		shallowEqual
 	)
+
 	const actorsError = useSelector(state => state.actorsList.error)
+
 	const actors = useSelector(state =>
 		state.actorsList ? state.actorsList.payload : null
 	)
+	
 	const fullActorsList = useSelector(state =>
 		state.fullActorsList ? state.fullActorsList.payload : null
 	)

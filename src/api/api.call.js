@@ -33,7 +33,6 @@ export const getActorsAsObservable = (
 				release_date,
 				characters: []
 			}
-			// subscriber.next(proxyFilmInstance)
 
 			const mergedFetchOptions = { ...fetchOptions, ...modifiedFetchOptions }
 
@@ -72,7 +71,6 @@ export const getActorsAsObservable = (
 				}
 				subscriber.next(proxyFilmInstance)
 			})
-			// subscriber.complete()
 		})
 	} catch (err) {
 		logger.error(err)
