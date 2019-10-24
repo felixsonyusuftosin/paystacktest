@@ -44,6 +44,7 @@ export const getActorsAsObservable = (
 
 				if (!charactersAsJson) {
 					subscriber.error(apiError({ status: 500, url }))
+					return
 				}
 				const { status, ok } = charactersAsJson
 
