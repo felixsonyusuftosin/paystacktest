@@ -4,10 +4,64 @@
 
 @mixin tableThemable($theme-name, $theme-map) {
     .#{$theme-name} {
+        .gender-bar-holder {
+            display: block;
+            position: relative;
+            margin: 10px 0px;
+            width: 50%;
+
+            .react-dropdown-select-dropdown {
+                border: none !important;
+            }
+
+            .gender-bar {
+                div {
+
+                    div {
+                        border-color: $dark-4 !important;
+                        box-sizing: border-box;
+                        padding: 0px 10px !important;
+                        color: $dark-4 !important;
+                    }
+                }
+            }
+        }
+
+        .actor-header,
+        strong {
+            @include h1;
+            font-weight: 200;
+            text-transform: capitalize !important;
+            display: block;
+            letter-spacing: 1px;
+            margin: $no-sizing;
+            padding: $no-sizing;
+            margin: $small $no-sizing;
+
+        }
+
+        strong {
+
+            display: inline-block;
+        }
+
         .table {
             width: 100%;
+            margin: auto;
             display: flex;
             flex-direction: column;
+
+            .no-data {
+                @include h1;
+                height: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: $dark-5;
+                padding: 30px 0px;
+
+
+            }
 
             .loader {
                 border-bottom: none !important;
@@ -29,13 +83,7 @@
                 border-bottom-style: solid;
                 border-width: 1px;
 
-                .no-data {
-                    @include h1;
-                    color: $dark-5;
-                    padding: 30px 0px;
 
-
-                }
 
                 .column {
                     box-sizing: border-box;
@@ -46,7 +94,6 @@
                         background: $dark-3 !important;
                         height: $table-row-height;
                         line-height: $table-row-height;
-                        border-radius: 4px;
                         border: none !important;
 
                         .react-dropdown-select-option {
@@ -66,7 +113,12 @@
                             @include span;
                             font-size: 0.8rem;
                         }
+
+                        .react-dropdown-select-dropdown {
+                            border: none !important;
+                        }
                     }
+
                 }
 
                 .column:nth-child(1) {
@@ -80,7 +132,7 @@
 
                     i {
                         font-size: 1.4rem;
-                        color: $dark-5;
+                        color: $yellow;
 
                     }
                 }
@@ -99,6 +151,7 @@
                     i {
                         margin-left: $mini;
                         cursor: pointer;
+                        color: $yellow;
                     }
                 }
 
@@ -127,6 +180,8 @@
                 font-weight: 600;
                 text-transform: uppercase !important;
                 letter-spacing: 1px;
+                color: $dark-7 !important;
+                background: $dark-3;
             }
 
             .table-header .column:nth-child(1) {

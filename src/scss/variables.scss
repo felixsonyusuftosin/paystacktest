@@ -23,7 +23,7 @@ $dark-8: lighten(#000, 70%);
 $faded: lighten(#000, 90%);
 $light: #fff;
 $yellow: #FCB500;
-$light-yellow:lighten(#FCB500, 40%);
+$light-yellow:lighten(#FCB500, 10%);
 $mid-yellow: lighten(#FCB500, 20%);
 
 
@@ -50,8 +50,8 @@ $sub: 0.6rem;
 }
 
 @mixin super {
-    font-weight:400;
-    letter-spacing:0.2rem;
+    font-weight: 400;
+    letter-spacing: 0.2rem;
     font-family: $main-font;
     margin: $no-sizing;
     font-size: $super;
@@ -59,16 +59,16 @@ $sub: 0.6rem;
 }
 
 @mixin h1 {
-    font-weight:400;
-    letter-spacing:0.2rem;
+    font-weight: 400;
+    letter-spacing: 0.2rem;
     font-family: $main-font;
     margin: $no-sizing;
     font-size: $h1;
 }
 
 @mixin h2 {
-    font-weight:400;
-    letter-spacing:0.1rem;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
     font-family: $main-font;
     margin: $no-sizing;
     font-size: $h2;
@@ -93,7 +93,7 @@ $sub: 0.6rem;
     $font-size: $sub;
 }
 
-@mixin ellipsis{ 
+@mixin ellipsis {
     width: 99%;
     display: inline-block;
     overflow: hidden;
@@ -101,6 +101,6 @@ $sub: 0.6rem;
     white-space: nowrap;
 }
 
-@mixin flex-wrap { 
+@mixin flex-wrap {
     flex-wrap: wrap;
 }

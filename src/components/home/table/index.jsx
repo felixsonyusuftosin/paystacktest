@@ -148,13 +148,16 @@ export const Table = () => {
 	} = componentUiState
 
 	return (
-		<section className="table">
+		<React.Fragment>
 			{actorsListIsReady && (
-				<div className="row table-header">
-					<div className="column">
-						<span> Gender</span>
-						<div className="select-bar">
+				<React.Fragment>
+					<p className="actor-header">
+						<strong>{`${movie.title}`}</strong>
+					</p>
+					<div className="gender-bar-holder">
+						<div className="select-bar  gender-bar ">
 							<SelectDropDown
+								placeholder="Select gender to filter table"
 								options={genderOptions}
 								labelField="label"
 								valueField="value"
@@ -164,61 +167,67 @@ export const Table = () => {
 							/>
 						</div>
 					</div>
-					<div className="column" onClick={sortTableByName}>
-						<span>
-							Name {isAscendingSortByName && <i className="fa fa-arrow-up" />}
-							{isDescendingSortByName && <i className="fa fa-arrow-down" />}
-						</span>
-					</div>
-					<div className="column" onClick={sortTableByHeight}>
-						<span>
-							Height{' '}
-							{isAscendingSortByHeight && <i className="fa fa-arrow-up" />}
-							{isDescendingSortByHeight && <i className="fa fa-arrow-down" />}
-						</span>
-					</div>
-				</div>
+				</React.Fragment>
 			)}
 
-			{actorsListIsReady
-				? actors.map((actor, index) => (
-						<div className="row" key={index}>
-							<div className="column">
-								<i className={`fa fa-${genderIcon[actor.gender]}`}></i>{' '}
-							</div>
-							<div className="column"> {actor.name}</div>
-							<div className="column"> {actor.height} </div>
+			<section className="table">
+				{actorsListIsReady && (
+					<div className="row table-header">
+						<div className="column">
+							<span> Gender</span>
 						</div>
-				  ))
-				: null}
+						<div className="column" onClick={sortTableByName}>
+							<span>
+								Name {isAscendingSortByName && <i className="fa fa-arrow-up" />}
+								{isDescendingSortByName && <i className="fa fa-arrow-down" />}
+							</span>
+						</div>
+						<div className="column" onClick={sortTableByHeight}>
+							<span>
+								Height{' '}
+								{isAscendingSortByHeight && <i className="fa fa-arrow-up" />}
+								{isDescendingSortByHeight && <i className="fa fa-arrow-down" />}
+							</span>
+						</div>
+					</div>
+				)}
 
-			{actorsListIsReady && (
-				<div className="row footer">
-					<div className="column"></div>
-					<div className="column"> {actors.length} &nbsp; Actors </div>
-					<div className="column">{formatComputedHeight}</div>
-				</div>
-			)}
+				{actorsListIsReady
+					? actors.map((actor, index) => (
+							<div className="row" key={index}>
+								<div className="column">
+									<i className={`fa fa-${genderIcon[actor.gender]}`}></i>{' '}
+								</div>
+								<div className="column"> {actor.name}</div>
+								<div className="column"> {actor.height} </div>
+							</div>
+					  ))
+					: null}
 
-			{noMovieSelected ? (
-				<div className="row">
+				{actorsListIsReady && (
+					<div className="row footer">
+						<div className="column"></div>
+						<div className="column"> {actors.length} &nbsp; Actors </div>
+						<div className="column">{formatComputedHeight}</div>
+					</div>
+				)}
+
+				{noMovieSelected ? (
 					<h3 className="no-data">
 						Please select a movie to see the list of actors
 					</h3>
-				</div>
-			) : null}
+				) : null}
 
-			{actorsListIsLoading && (
-				<div className="row laoder">
-					<Loader />
-				</div>
-			)}
+				{actorsListIsLoading && (
+					<div className="row laoder">
+						<Loader />
+					</div>
+				)}
 
-			{actorsListErroredWhileFetching && (
-				<div className="row">
+				{actorsListErroredWhileFetching && (
 					<h3 className="no-data">{actorsError}</h3>
-				</div>
-			)}
-		</section>
+				)}
+			</section>
+		</React.Fragment>
 	)
 }

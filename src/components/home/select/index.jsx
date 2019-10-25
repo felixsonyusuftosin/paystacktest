@@ -14,13 +14,7 @@ import '@home/select/styles/select.scss'
 import { dispatchActionsSync, dispatchActionsObservable } from '@store'
 import { getActorsAsObservable } from '@api'
 
-export const Select = ({
-	selectTheme,
-	selectedTheme,
-	films,
-	pending,
-	error
-}) => {
+export const Select = ({ films, pending, error }) => {
 	const dispatch = useDispatch()
 	const selectedMovie = useSelector(state =>
 		state.selectedMovie.payload ? state.selectedMovie.payload : null
@@ -65,6 +59,7 @@ export const Select = ({
 		<div className="top">
 			<div className="select-bar">
 				<SelectDropDown
+					className="custom-select"
 					onChange={onSelectChange}
 					loading={pending && !error}
 					options={films}
@@ -75,18 +70,6 @@ export const Select = ({
 					valueField="episode_id"
 					onClearAll={onClear}
 				/>
-			</div>
-			<div className="switch-context">
-				<span
-					className={selectedTheme === 'dark-theme' ? 'span selected' : 'span'}
-					onClick={() => selectTheme('dark-theme')}>
-					Dark Theme
-				</span>
-				<span
-					className={selectedTheme === 'light-theme' ? 'span selected' : 'span'}
-					onClick={() => selectTheme('light-theme')}>
-					Light Theme
-				</span>
 			</div>
 			<NotificationContainer />
 		</div>
