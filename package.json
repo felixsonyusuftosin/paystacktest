@@ -27,6 +27,8 @@
 	"homepage": "git+https: //github.com/felixsonyusuftosin/paystacktest",
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.11.2",
+		"animate.css": "^3.7.2",
+		"animate.css-react": "^0.1.0",
 		"cache-polyfill": "^1.0.1",
 		"gh-pages": "^2.1.1",
 		"humps": "^2.0.1",
@@ -60,7 +62,6 @@
 		"@babel/preset-react": "^7.6.3",
 		"@babel/runtime": "^7.6.3",
 		"@hot-loader/react-dom": "^16.10.2",
-		"@types/dotenv": "^6.1.1",
 		"babel-loader": "^8.0.6",
 		"css-loader": "^3.2.0",
 		"dotenv": "^8.2.0",
