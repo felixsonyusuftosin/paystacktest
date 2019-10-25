@@ -4,7 +4,6 @@
 
 @mixin midThemable($theme-name, $theme-map) {
 
-
     @keyframes blinker {
         60% {
             opacity: 0;
@@ -33,27 +32,31 @@
 
             .statement-section {
                 box-sizing: border-box;
-                padding: $large;
-                align-items: flex-end;
-                justify-content: center;
-                height: 30%;
+                padding-top: $large;
+                height: 27%;
                 text-align: center;
-                width: 100%;
+                width: 75%;
                 overflow: hidden;
                 padding-bottom: $no-sizing;
                 transition: 0.5s ease-out;
-                display: flex;
+                column-count: 3;
+                column-gap: 10px;
+                column-rule-style: solid;
+                column-width: 100px;
+                column-span: all;
+                margin: auto;
+                column-rule-color: transparent;
 
                 .word {
-                    @include super;
-                    height: 100%;
+                    @include h2;
                     overflow: hidden;
-                    align-items: flex-end;
-                    text-align: center;
-                    align-items: bottom;
-                    display: inline-flex;
                     letter-spacing: 2px;
                     text-rendering: optimizeLegibility;
+                    width: 100%;
+                    margin: auto;
+                    flex-wrap: wrap-reverse;
+                    text-align: left;
+                    font-family: 'Roboto';
 
                     span {
                         @include super;
@@ -70,7 +73,7 @@
                     -webkit-animation: blinker 1s linear infinite;
                     text-rendering: optimizeLegibility;
                     content: "_" !important;
-                    color: $yellow;
+                    color: $light-yellow;
                     -webkit-transition: all 0s !important;
                     -moz-transition: all 0s !important;
                     -ms-transition: all 0s !important;
@@ -78,14 +81,13 @@
                 }
 
 
-
-
                 .style::first-letter {
-                    color: $yellow;
+                    color: $light-yellow;
                     font-weight: 800;
                 }
 
             }
+
 
             .actor-list {
                 @include flex-wrap;
