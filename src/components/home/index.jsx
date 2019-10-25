@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
-import { Select } from '@home/select'
+import { Select } from '@home/select' 
 import { Left } from '@home/left'
 import { Mid } from '@home/mid'
 import { Footer } from '@home/footer'
