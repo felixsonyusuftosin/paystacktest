@@ -53,7 +53,6 @@ export const Mid = () => {
 			)}
 			{!actors && <img src={Icon} alt="Star wars" />}
 			<section className="actor-list">
-				<p className="actor-header">Actors</p>
 				<Table />
 			</section>
 		</div>

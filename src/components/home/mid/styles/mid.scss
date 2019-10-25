@@ -90,7 +90,8 @@
             .actor-list {
                 @include flex-wrap;
                 height: 70%;
-                width: 100%;
+                width: 80%;
+                margin: auto;
                 justify-content: space-between;
                 box-sizing: border-box;
                 padding: $large;

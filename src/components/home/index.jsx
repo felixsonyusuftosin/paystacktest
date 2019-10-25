@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector, shallowEqual } from 'react-redux'
 
-import { Select } from '@home/select' 
-import { Left } from '@home/left'
+import { Select } from '@home/select'
 import { Mid } from '@home/mid'
 import { Footer } from '@home/footer'
 import { dispatchActionsAsync, dispatchActionsSync } from '@store'
@@ -38,7 +37,6 @@ export const Home = () => {
 	return (
 		<div className={selectedTheme}>
 			<div className="container ">
-				<Left />
 				<section className="main">
 					<Select
 						films={films}
@@ -48,7 +46,7 @@ export const Home = () => {
 						error={error}
 					/>
 					<Mid />
-				</section> 
+				</section>
 			</div>
 			<Footer />
 		</div>
