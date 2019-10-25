@@ -65,7 +65,7 @@ export const Table = () => {
 			const order =
 				sortParameter.order === 'ascending' ? 'descending' : 'ascending'
 			const sortedActors = sortActorsByName(
-				actors.characters,
+				[...actors.characters],
 				order === 'ascending'
 			)
 			const sortedActorsFilm = { ...actors, characters: sortedActors }
@@ -79,7 +79,7 @@ export const Table = () => {
 			const order =
 				sortParameter.order === 'ascending' ? 'descending' : 'ascending'
 			const sortedActors = sortActorsByHeight(
-				actors.characters,
+				[...actors.characters],
 				order === 'ascending'
 			)
 			const sortedActorsFilm = { ...actors, characters: sortedActors }
