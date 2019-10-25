@@ -10,6 +10,7 @@ import '@home/footer/styles/footer.scss'
 
 export const Footer = () => (
 	<footer className="footer">
-		Test completed by Felixson Yusuf Tosin for <span className="yellow"> &nbsp;Paystack&reg;</span>
+		Test completed by Felixson Yusuf Tosin for{' '}
+		<span className="yellow"> &nbsp;Paystack&reg;</span>
 	</footer>
 )
