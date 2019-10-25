@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 const path = require('path')
 const webpack = require('webpack')
-
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const port = process.env.port | 3000
 
 module.exports = {
@@ -52,16 +52,21 @@ module.exports = {
 		modules: [path.resolve('./src/'), 'node_modules']
 	},
 	output: {
-		path: path.resolve(__dirname, 'dist/'),
-		publicPath: '/dist/',
+		path: path.resolve(__dirname, 'build/'),
+		publicPath: '/',
 		filename: 'bundle.js'
 	},
 	devServer: {
 		historyApiFallback: true,
-		contentBase: path.join(__dirname, 'public/'),
+		contentBase: path.join(__dirname, 'build/'),
 		port,
-		publicPath: `http://localhost:${port}/dist/`,
+		publicPath: `http://localhost:${port}/build/`,
 		hotOnly: true
 	},
-	plugins: [new webpack.HotModuleReplacementPlugin()]
+	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
+		new HtmlWebpackPlugin({
+			template: path.resolve(__dirname, 'public/index.html')
+		})
+	]
 }
