@@ -14,13 +14,7 @@ import '@home/select/styles/select.scss'
 import { dispatchActionsSync, dispatchActionsObservable } from '@store'
 import { getActorsAsObservable } from '@api'
 
-export const Select = ({
-	selectTheme,
-	selectedTheme,
-	films,
-	pending,
-	error
-}) => {
+export const Select = ({ films, pending, error }) => {
 	const dispatch = useDispatch()
 	const selectedMovie = useSelector(state =>
 		state.selectedMovie.payload ? state.selectedMovie.payload : null
@@ -65,6 +59,7 @@ export const Select = ({
 		<div className="top">
 			<div className="select-bar">
 				<SelectDropDown
+					className="custom-select"
 					onChange={onSelectChange}
 					loading={pending && !error}
 					options={films}
