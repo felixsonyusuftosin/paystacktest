@@ -76,18 +76,6 @@ export const Select = ({
 					onClearAll={onClear}
 				/>
 			</div>
-			<div className="switch-context">
-				<span
-					className={selectedTheme === 'dark-theme' ? 'span selected' : 'span'}
-					onClick={() => selectTheme('dark-theme')}>
-					Dark Theme
-				</span>
-				<span
-					className={selectedTheme === 'light-theme' ? 'span selected' : 'span'}
-					onClick={() => selectTheme('light-theme')}>
-					Light Theme
-				</span>
-			</div>
 			<NotificationContainer />
 		</div>
 	)
