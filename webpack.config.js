@@ -5,7 +5,7 @@ const webpack = require('webpack')
 const port = process.env.port | 3000
 
 module.exports = {
-	entry: './src/index.js',
+	entry: ['./src/index.js'],
 	mode: 'development',
 	module: {
 		rules: [
@@ -47,7 +47,8 @@ module.exports = {
 			'@store': path.resolve(__dirname, 'src/store'),
 			'@api': path.resolve(__dirname, 'src/api'),
 			'@widgets': path.resolve(__dirname, 'src/components/widgets'),
-			'@assets': path.resolve(__dirname, 'src/assets')
+			'@assets': path.resolve(__dirname, 'src/assets'),
+			'react-dom': '@hot-loader/react-dom'
 		},
 		modules: [path.resolve('./src/'), 'node_modules']
 	},
