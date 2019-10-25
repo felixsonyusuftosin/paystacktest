@@ -6,7 +6,7 @@ import { Home } from '@home'
 import 'App.scss'
 
 const App = () => (
-  <Router basename={process.env.PUBLIC_URL}>
+	<Router basename={process.env.PUBLIC_URL}>
 		<Switch>
 			<Route exact path="/">
 				<Home />
