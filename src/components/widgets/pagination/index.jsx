@@ -41,7 +41,7 @@ export const Pagination = ({ children, pageSize = 10, onActorsLoaded }) => {
 	
 	useEffect(() => {
 		runPaginationUpdate() 
-	}, actors)
+	}, [actors])
 
 	const eventActorsLoaded = newActorsList => {
 		onActorsLoaded(newActorsList)
