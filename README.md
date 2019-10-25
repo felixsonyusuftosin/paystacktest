@@ -18,5 +18,7 @@ This test was completed with React JS
 
 ## Run in production
 
+- switch to deploy branch `git checkout deploy`
+- build the app `npm run build`
 - Run the app in **Production mode** `npm run serve`
 - navigate to `localhost:5000`
