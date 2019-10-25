@@ -3,7 +3,7 @@
  */
 
 import React, { useCallback } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux'
 
 import { Table } from '@home/table'
 import '@home/mid/styles/mid.scss'
@@ -11,10 +11,12 @@ import Icon from './starwars.png'
 
 let interval
 export const Mid = () => {
-	const word = useSelector(state =>
-		state.selectedMovie.payload
-			? state.selectedMovie.payload.opening_crawl
-			: ' '
+	const word = useSelector(
+		state =>
+			state.selectedMovie.payload
+				? state.selectedMovie.payload.opening_crawl
+				: ' ',
+		shallowEqual
 	)
 
 	const actors = useSelector(
