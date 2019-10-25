@@ -29,7 +29,6 @@ export const Mid = () => {
 					enter="fadeInDown"
 					leave="fadeOutUp"
 					appear="fadeInDown"
-					change="fadeInDown"
 					animate={true}
 					component="p">
 					<section className="statement-section">
