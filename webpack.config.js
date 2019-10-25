@@ -52,7 +52,7 @@ module.exports = {
 		modules: [path.resolve('./src/'), 'node_modules']
 	},
 	output: {
-		path: path.resolve(__dirname, 'build/'),
+		path: path.resolve(__dirname, 'dist/'),
 		publicPath: '/dist/',
 		filename: 'bundle.js'
 	},
@@ -60,7 +60,7 @@ module.exports = {
 		historyApiFallback: true,
 		contentBase: path.join(__dirname, 'public/'),
 		port,
-		publicPath: `http://localhost:${port}/build/`,
+		publicPath: `http://localhost:${port}/dist/`,
 		hotOnly: true
 	},
 	plugins: [new webpack.HotModuleReplacementPlugin()]
