@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs'
 import { apiError } from '@api/error'
 import { logger } from '@utils'
+import { getCachedApiRequests, setCachedApiRequests } from '@api'
 
 export const fetchOptions = {
 	method: 'GET',
@@ -33,7 +34,14 @@ export const getActorsAsObservable = (
 				release_date,
 				characters: []
 			}
+			const interceptCachedRequest = getCachedApiRequests(
+				`${filmInstance.title}${filmInstance.episode_id.toString()}`
+			)
 
+			if (interceptCachedRequest) {
+				subscriber.next(interceptCachedRequest)
+				return
+			}
 			const mergedFetchOptions = { ...fetchOptions, ...modifiedFetchOptions }
 
 			const { headers } = mergedFetchOptions
@@ -50,6 +58,11 @@ export const getActorsAsObservable = (
 
 				if (status == 404) {
 					subscriber.next(proxyFilmInstance)
+					setCachedApiRequests(
+						`${filmInstance.title}${filmInstance.episode_id.toString()}`,
+						proxyFilmInstance
+					)
+
 					return
 				}
 				if (!ok) {
@@ -71,6 +84,10 @@ export const getActorsAsObservable = (
 					characters: newlyResolvedCharacters
 				}
 				subscriber.next(proxyFilmInstance)
+				setCachedApiRequests(
+					`${filmInstance.title}${filmInstance.episode_id.toString()}`,
+					proxyFilmInstance
+				)
 			})
 		})
 	} catch (err) {
@@ -82,6 +99,11 @@ export const getActorsAsObservable = (
 export const getFilmsAsync = async url => {
 	try {
 		const { headers } = fetchOptions
+		const interceptCachedRequest = getCachedApiRequests(url)
+
+		if (interceptCachedRequest) {
+			return interceptCachedRequest
+		}
 		const filmsAsJson = await fetch(url, headers)
 
 		if (!filmsAsJson) {
@@ -89,7 +111,8 @@ export const getFilmsAsync = async url => {
 		}
 		const { status, ok } = filmsAsJson
 		if (status == 404) {
-			return []
+			setCachedApiRequests(url, {})
+			return {}
 		}
 		if (!ok) {
 			throw new Error(apiError({ status, url }))
@@ -97,6 +120,7 @@ export const getFilmsAsync = async url => {
 
 		const films = await filmsAsJson.json()
 
+		setCachedApiRequests(url, films.results)
 		return films.results
 	} catch (err) {
 		logger.error(err)
