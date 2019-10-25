@@ -4,7 +4,7 @@ This test was completed with React JS
 
 ## Demo
 
-[Please click for demo](https://5db2489295ba32018c637894--silly-rosalind-8797f1.netlify.com/)
+[Please click for demo](silly-rosalind-8797f1.netlify.com)
 
 ## Test
 
