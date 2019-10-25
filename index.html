@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,
+      shrink-to-fit=no">
+    <title>Paystack Test</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <script> 
+  if('serviceWorker' in navigator  ) { 
+    // process.env.node_env === 'production'
+    navigator.serviceWorker.register('/service-worker.js').then(function() {console.log(' Regisgtered service worker');});
+  } else { 
+    console.log('no service worker registered as it is not supported in browser ')
+  }
+  </script>
+  <script type="text/javascript" src="/bundle.js"></script></body>
+
+</html>
