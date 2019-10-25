@@ -48,7 +48,7 @@ export const Home = () => {
 						error={error}
 					/>
 					<Mid />
-				</section>
+				</section> 
 			</div>
 			<Footer />
 		</div>
