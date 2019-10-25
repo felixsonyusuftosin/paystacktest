@@ -34,3 +34,15 @@ export const sortActorsByName = (actors, ascending = true) => {
 		return val * -1
 	})
 }
+
+export const sortMoviesByDate = movies => {
+	return movies.sort((A, B) => {
+		const transformedA = new Date(A.release_date)
+		const transformedB = new Date(B.release_date)
+		return transformedA < transformedB
+			? -1
+			: transformedA > transformedB
+			? 1
+			: 0
+	})
+}

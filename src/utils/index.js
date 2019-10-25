@@ -10,6 +10,7 @@ export { logger } from '@utils/logger'
 export {
 	filterByGender,
 	sortActorsByName,
-	sortActorsByHeight
+	sortActorsByHeight,
+	sortMoviesByDate
 } from '@utils/array.manipulation'
 export { Paginate } from '@utils/pagination'

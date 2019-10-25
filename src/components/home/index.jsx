@@ -5,12 +5,15 @@ import { Select } from '@home/select'
 import { Left } from '@home/left'
 import { Mid } from '@home/mid'
 import { Footer } from '@home/footer'
-import { dispatchActionsAsync } from '@store'
+import { dispatchActionsAsync, dispatchActionsSync } from '@store'
 import { getFilmsAsync } from '@api'
+import { sortMoviesByDate } from '@utils'
 
 export const Home = () => {
 	const [selectedTheme, selectTheme] = useState('dark-theme')
-	const films = useSelector(state => state.fetchFilms.payload)
+	const films = useSelector(state =>
+		state.fetchFilms ? state.fetchFilms.payload : null
+	)
 	const pending = useSelector(state => state.fetchFilms.pending, shallowEqual)
 	const error = useSelector(state => state.fetchFilms.error, shallowEqual)
 	const dispatch = useDispatch()
@@ -24,6 +27,13 @@ export const Home = () => {
 			)
 		}
 	})
+
+	useEffect(() => {
+		if (films) {
+			const sortedFilms = sortMoviesByDate(films)
+			dispatch(dispatchActionsSync('FETCH_FILMS', sortedFilms))
+		}
+	}, [films])
 
 	return (
 		<div className={selectedTheme}>
