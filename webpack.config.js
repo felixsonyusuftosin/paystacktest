@@ -3,9 +3,9 @@ const path = require('path')
 const webpack = require('webpack')
 const dotenv = require('dotenv')
 const fs = require('fs')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const port = process.env.port | 3000
-// const env = dotenv.config().parsed )
 
 module.exports = env => {
 	const basePath = path.join(__dirname) + '/.env'
@@ -66,20 +66,23 @@ module.exports = env => {
 			modules: [path.resolve('./src/'), 'node_modules']
 		},
 		output: {
-			path: path.resolve(__dirname, 'dist/'),
-			publicPath: '/dist/',
+			path: path.resolve(__dirname, 'build/'),
+			publicPath: '/',
 			filename: 'bundle.js'
 		},
 		devServer: {
 			historyApiFallback: true,
-			contentBase: path.join(__dirname, 'public/'),
+			contentBase: path.join(__dirname, 'build/'),
 			port,
-			publicPath: `http://localhost:${port}/dist/`,
+			publicPath: `http://localhost:${port}/build/`,
 			hotOnly: true
 		},
 		plugins: [
 			new webpack.HotModuleReplacementPlugin(),
-			new webpack.DefinePlugin(envKeys)
+			new webpack.DefinePlugin(envKeys),
+			new HtmlWebpackPlugin({
+				template: path.resolve(__dirname, 'public/index.html')
+			})
 		]
 	}
 }
