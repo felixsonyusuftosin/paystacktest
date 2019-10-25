@@ -50,7 +50,7 @@ export const Table = () => {
 	const actors = useSelector(state =>
 		state.actorsList ? state.actorsList.payload : null
 	)
-	
+
 	const fullActorsList = useSelector(state =>
 		state.fullActorsList ? state.fullActorsList.payload : null
 	)

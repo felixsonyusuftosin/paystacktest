@@ -3,7 +3,6 @@ import { Paginate } from '@utils'
 import '@widgets/pagination/pagination.scss'
 import { useSelector } from 'react-redux'
 
-
 export const Pagination = ({ children, pageSize = 10, onActorsLoaded }) => {
 	const actors = useSelector(
 		state => state.actorsList.payload && state.actorsList.payload.characters
@@ -25,9 +24,7 @@ export const Pagination = ({ children, pageSize = 10, onActorsLoaded }) => {
 		_prevable
 	} = paginate
 
-
 	const runPaginationUpdate = (actorsList = actors) => {
-
 		if (actorsList && actorsList.length) {
 			onActorsLoaded(paginate.computePages())
 			currentPage = paginate.currentPage
@@ -38,9 +35,9 @@ export const Pagination = ({ children, pageSize = 10, onActorsLoaded }) => {
 			allPages = paginate.allPages
 		}
 	}
-	
+
 	useEffect(() => {
-		runPaginationUpdate() 
+		runPaginationUpdate()
 	}, [actors])
 
 	const eventActorsLoaded = newActorsList => {

@@ -31,9 +31,7 @@ export const Home = () => {
 	useEffect(() => {
 		if (films) {
 			const sortedFilms = sortMoviesByDate(films)
-			dispatch(
-				dispatchActionsSync('FETCH_FILMS', sortedFilms)
-			)
+			dispatch(dispatchActionsSync('FETCH_FILMS', sortedFilms))
 		}
 	}, [films])
 
