@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Select as SelectDropDown } from 'react-dropdown-select'
-import { Loader } from '@widgets'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { Loader } from '@widgets'
 import { filterByGender, sortActorsByName, sortActorsByHeight } from '@utils'
 import { dispatchActionsSync } from '@store'
 import '@home/table/styles/table.scss'
@@ -33,6 +34,9 @@ export const Table = () => {
 	const actors = useSelector(state =>
 		state.actorsList.payload ? state.actorsList.payload.characters : null
 	)
+	const movie = useSelector(state =>
+		state.actorsList.payload ? state.actorsList.payload : null
+	)
 
 	if (actors && actors.length) {
 		const reduced = actors.reduce((total, currentValue) => {
@@ -53,37 +57,47 @@ export const Table = () => {
 	)
 
 	const [sortParameter, setSorting] = useState({
-		name: 'name',
-		oorder: 'ascending'
+		name: {
+			order: 'descending'
+		},
+		height: {
+			order: 'descending'
+		},
+		activeSort: ''
 	})
 
 	const sortTableByName = () => {
 		if (actors) {
 			const order =
-				sortParameter.order === 'ascending' ? 'descending' : 'ascending'
-			const sortedActors = sortActorsByName(
-				[...actors.characters],
-				order === 'ascending'
-			)
-			const sortedActorsFilm = { ...actors, characters: sortedActors }
+				sortParameter.name.order === 'ascending' ? 'descending' : 'ascending'
+			const sortedActors = sortActorsByName([...actors], order === 'ascending')
+			const sortedActorsFilm = { ...movie, characters: sortedActors }
 
 			dispatch(dispatchActionsSync('ACTORS_LIST', sortedActorsFilm))
-			setSorting({ name: 'name', order })
+			setSorting({
+				...sortParameter,
+				name: { order },
+				activeSort: 'name'
+			})
 		}
 	}
 
 	const sortTableByHeight = () => {
 		if (actors) {
 			const order =
-				sortParameter.order === 'ascending' ? 'descending' : 'ascending'
+				sortParameter.height.order === 'ascending' ? 'descending' : 'ascending'
 			const sortedActors = sortActorsByHeight(
-				[...actors.characters],
+				[...actors],
 				order === 'ascending'
 			)
-			const sortedActorsFilm = { ...actors, characters: sortedActors }
+			const sortedActorsFilm = { ...movie, characters: sortedActors }
 
 			dispatch(dispatchActionsSync('ACTORS_LIST', sortedActorsFilm))
-			setSorting({ name: 'height', order })
+			setSorting({
+				...sortParameter,
+				height: { order },
+				activeSort: 'height'
+			})
 		}
 	}
 
@@ -93,7 +107,7 @@ export const Table = () => {
 				gender[0].value,
 				fullActorsList.characters
 			)
-			const filteredActorsFilm = { ...actors, characters: filteredActors }
+			const filteredActorsFilm = { ...movie, characters: filteredActors }
 
 			dispatch(dispatchActionsSync('ACTORS_LIST', filteredActorsFilm))
 		}
@@ -104,15 +118,18 @@ export const Table = () => {
 	}
 
 	const componentUiState = {
-		actorsNotEmpty: actors && actors.length,
 		isAscendingSortByName:
-			sortParameter === 'name' && sortParameter.order === 'ascending',
+			sortParameter.activeSort === 'name' &&
+			sortParameter.name.order === 'ascending',
 		isDescendingSortByName:
-			sortParameter === 'name' && sortParameter.order === 'descending',
+			sortParameter.activeSort === 'name' &&
+			sortParameter.name.order === 'descending',
 		isAscendingSortByHeight:
-			sortParameter === 'height' && sortParameter.order === 'ascending',
+			sortParameter.activeSort === 'height' &&
+			sortParameter.height.order === 'ascending',
 		isDescendingSortByHeight:
-			sortParameter === 'height' && sortParameter.order === 'descending',
+			sortParameter.activeSort === 'height' &&
+			sortParameter.height.order === 'descending',
 		actorsListIsReady: actors && !actorsPending && !actorsError,
 		noMovieSelected: !actors && !actorsPending && !actorsError,
 		actorsListIsLoading: !actors && !actorsError && actorsPending,
@@ -120,7 +137,6 @@ export const Table = () => {
 	}
 
 	const {
-		actorsNotEmpty,
 		isAscendingSortByHeight,
 		isAscendingSortByName,
 		isDescendingSortByHeight,
@@ -133,7 +149,7 @@ export const Table = () => {
 
 	return (
 		<section className="table">
-			{actorsNotEmpty && (
+			{actorsListIsReady && (
 				<div className="row table-header">
 					<div className="column">
 						<span> Gender</span>
