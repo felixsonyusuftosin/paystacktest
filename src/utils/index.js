@@ -13,4 +13,3 @@ export {
 	sortActorsByHeight,
 	sortMoviesByDate
 } from '@utils/array.manipulation'
-export { Paginate } from '@utils/pagination'
