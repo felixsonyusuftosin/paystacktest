@@ -9,6 +9,12 @@
 
 @mixin selectThemable($theme-name, $theme-map) {
     .#{$theme-name} {
+        .react-dropdown-select-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .top {
             height: 10%;
             width: 70%;
