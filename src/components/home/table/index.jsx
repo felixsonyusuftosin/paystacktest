@@ -219,7 +219,7 @@ export const Table = () => {
 				) : null}
 
 				{actorsListIsLoading && (
-					<div className="row laoder">
+					<div className="loader">
 						<Loader />
 					</div>
 				)}
