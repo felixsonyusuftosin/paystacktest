@@ -12,7 +12,7 @@ import '@home/mid/styles/mid.scss'
 import Icon from './starwars.png'
 
 export const Mid = () => {
-	const word = useSelector(state =>
+	const openingCrawl = useSelector(state =>
 		state.selectedMovie.payload
 			? state.selectedMovie.payload.opening_crawl
 			: ' '
@@ -32,7 +32,7 @@ export const Mid = () => {
 					animate={true}>
 					<section className="statement-section">
 						<p className="word style" id="sentence">
-							{word}
+							{openingCrawl}
 						</p>
 					</section>
 				</Animate>
