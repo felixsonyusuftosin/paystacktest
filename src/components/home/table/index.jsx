@@ -37,6 +37,9 @@ export const Table = () => {
 	const movie = useSelector(state =>
 		state.actorsList.payload ? state.actorsList.payload : null
 	)
+	const fullActorsList = useSelector(state =>
+		state.fullActorsList ? state.fullActorsList.payload : null
+	)
 
 	if (actors && actors.length) {
 		const reduced = actors.reduce((total, currentValue) => {
@@ -51,11 +54,6 @@ export const Table = () => {
 	}
 
 	const formatComputedHeight = `${totalHeightCm}cm (${totalHeightft}ft/${totalHeightIn}in)`
-
-	const fullActorsList = useSelector(state =>
-		state.fullActorsList ? state.fullActorsList.payload : null
-	)
-
 	const [sortParameter, setSorting] = useState({
 		name: {
 			order: 'descending'
@@ -164,6 +162,7 @@ export const Table = () => {
 								onClearAll={clearGenderFilter}
 								onChange={onFilterByGender}
 								clearable={true}
+								clearOnSelect={true}
 							/>
 						</div>
 					</div>
