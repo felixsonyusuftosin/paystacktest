@@ -2,30 +2,6 @@
 @import './dark-theme.scss';
 @import './light-theme.scss';
 
-/***
-Table Of Content
------------------------
-container 
-    main
-        top
-            selectBar
-            switchContext
-        mid
-            starwars intro
-            entry-message
-        bottom
-           item-list
-           item-details
-    left
-       heading
-       highlights
-       list of recent
-       footer-of-left
-footer:
-    message
-    right-logo
-
-***/
 
 @mixin themable($theme-name, $theme-map) {
     * {
