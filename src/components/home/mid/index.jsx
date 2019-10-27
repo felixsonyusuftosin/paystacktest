@@ -29,8 +29,7 @@ export const Mid = () => {
 					enter="fadeInDown"
 					leave="fadeOutUp"
 					appear="fadeInDown"
-					animate={true}
-					component="p">
+					animate={true}>
 					<section className="statement-section">
 						<p className="word style" id="sentence">
 							{word}
