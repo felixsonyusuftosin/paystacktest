@@ -107,7 +107,7 @@ export const getFilmsAsync = async url => {
 		const filmsAsJson = await fetch(url, headers)
 
 		if (!filmsAsJson) {
-			subscriber.error(apiError({ status: 500, url }))
+			throw new Error(error(apiError({ status: 500, url })))
 		}
 		const { status, ok } = filmsAsJson
 		if (status == 404) {
