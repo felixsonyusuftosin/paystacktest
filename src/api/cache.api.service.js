@@ -9,6 +9,7 @@ export const getCachedApiRequests = key => {
 		return JSON.parse(existingCache)
 	} catch (err) {
 		logger.error(`Could not cache requests from ${key} - ${err}`)
+		return false
 	}
 }
 
