@@ -58,6 +58,7 @@ export const getActorsAsObservable = (
 
 				if (!character) {
 					subscriber.error(apiError({ status: 500, url }))
+					return
 				}
 				const newlyResolvedCharacters = [
 					...proxyFilmInstance.characters,
