@@ -17,23 +17,8 @@ export const getActorsAsObservable = (
 ) => {
 	try {
 		return new Observable(subscriber => {
-			const {
-				title,
-				episode_id,
-				opening_crawl,
-				director,
-				producer,
-				release_date
-			} = filmInstance
-			let proxyFilmInstance = {
-				title,
-				episode_id,
-				opening_crawl,
-				director,
-				producer,
-				release_date,
-				characters: []
-			}
+			let proxyFilmInstance = { ...filmInstance, characters: [] }
+
 			const interceptCachedRequest = getCachedApiRequests(
 				`${filmInstance.title}${filmInstance.episode_id.toString()}`
 			)
