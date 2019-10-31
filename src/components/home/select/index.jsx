@@ -4,7 +4,6 @@
 
 // third party imports
 import React, { useEffect } from 'react'
-import { Select as SelectDropDown } from 'react-dropdown-select'
 import { useDispatch, useSelector } from 'react-redux'
 import 'react-notifications/lib/notifications.css'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
@@ -13,6 +12,7 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
 import '@home/select/styles/select.scss'
 import { dispatchActionsSync, dispatchActionsObservable } from '@store'
 import { getActorsAsObservable } from '@api'
+import { SelectWidget } from '@widgets'
 
 export const Select = ({ films, pending, error }) => {
 	const dispatch = useDispatch()
@@ -20,11 +20,17 @@ export const Select = ({ films, pending, error }) => {
 		state.selectedMovie.payload ? state.selectedMovie.payload : null
 	)
 
-	const onSelectChange = value => {
-		dispatch(dispatchActionsSync('SELECTED_MOVIE', value[0]))
+	const onSelectChange = event => {
+		const { target = {} } = event
+		const { value } = target
+
+		const movieSelected =
+			films.find(film => +film.episode_id === +value) || null
+
+		dispatch(dispatchActionsSync('SELECTED_MOVIE', movieSelected))
 	}
 
-	const onClear = () => {
+	const onSelectCancel = () => {
 		dispatch(dispatchActionsSync('SELECTED_MOVIE', null))
 		dispatch(dispatchActionsSync('ACTORS_LIST', null))
 		dispatch(dispatchActionsSync('FULL_ACTORS_LIST', null))
@@ -58,17 +64,14 @@ export const Select = ({ films, pending, error }) => {
 	return (
 		<div className="top">
 			<div className="select-bar">
-				<SelectDropDown
-					className="custom-select"
+				<SelectWidget
 					onChange={onSelectChange}
-					loading={pending && !error}
+					onCancel={onSelectCancel}
+					loading={pending.toString()}
+					valuename="episode_id"
+					labelname="title"
+					placeholder="Select movie ..."
 					options={films}
-					disabled={pending}
-					clearable={true}
-					sortBy="release_date"
-					labelField="title"
-					valueField="episode_id"
-					onClearAll={onClear}
 				/>
 			</div>
 			<NotificationContainer />

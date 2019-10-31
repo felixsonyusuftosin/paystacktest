@@ -8,6 +8,9 @@ export const filterByGender = (gender, actors) => {
 	})
 }
 
+export const getDistinctByGender = (inputArray, field) =>
+	Array.from([...new Set(inputArray.map(item => item[field]))])
+
 export const sortActorsByHeight = (actors, ascending = true) => {
 	return actors.sort((A, B) => {
 		const transformedA = !isNaN(+A.height) ? A.height : 0
@@ -25,6 +28,20 @@ export const sortActorsByName = (actors, ascending = true) => {
 	return actors.sort((A, B) => {
 		const transformedA = A.name.toLowerCase().trim()
 		const transformedB = B.name.toLowerCase().trim()
+		const val =
+			transformedA < transformedB ? -1 : transformedA > transformedB ? 1 : 0
+
+		if (ascending) {
+			return val
+		}
+		return val * -1
+	})
+}
+
+export const sortActorsByGender = (actors, ascending = true) => {
+	return actors.sort((A, B) => {
+		const transformedA = A.gender.toLowerCase().trim()
+		const transformedB = B.gender.toLowerCase().trim()
 		const val =
 			transformedA < transformedB ? -1 : transformedA > transformedB ? 1 : 0
 
