@@ -4,7 +4,6 @@
 
 // third party imports
 import React, { useEffect } from 'react'
-import { Select as SelectDropDown } from 'react-dropdown-select'
 import { useDispatch, useSelector } from 'react-redux'
 import 'react-notifications/lib/notifications.css'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
