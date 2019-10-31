@@ -10,12 +10,6 @@
 @mixin selectThemable($theme-name, $theme-map) {
     .#{$theme-name} {
 
-        .react-dropdown-select-loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
         .top {
             height: 10%;
             width: 70%;
@@ -29,41 +23,6 @@
             .select-bar {
                 width: 100%;
                 height: 100%;
-
-                div {
-                    div {
-                        border-color: $yellow !important;
-                        box-sizing: border-box;
-                        padding: 0px 10px !important;
-                        min-height: 50px !important;
-                        line-height: 50px !important;
-                    }
-                }
-
-                .react-dropdown-select-dropdown {
-                    position: absolute;
-                    left: 0;
-                    border: none;
-                    width: 500px;
-                    padding: 0;
-                    display: flex;
-                    flex-direction: column;
-                    border-radius: 2px;
-                    max-height: 300px;
-                    overflow: auto;
-                    z-index: 9;
-                    box-shadow: none;
-                    font-size: 1rem !important;
-                    line-height: 2.2rem !important;
-
-                }
-
-
-                .react-dropdown-select-item.react-dropdown-select-item-disabled {
-                    background: #777;
-                    color: #ccc;
-
-                }
             }
 
             .switch-context {
@@ -90,44 +49,7 @@
             @if($section==colors) {
                 .select-bar {
                     background: map-get($map, bg);
-                    border: solid 1px map-get($map, border);
                     color: $yellow;
-
-                    .react-dropdown-select-dropdown {
-                        background: map-get($map, bg);
-                        color: $yellow;
-                    }
-
-                    .react-dropdown-select-clear,
-                    .react-dropdown-select-dropdown-handle,
-                    .react-dropdown-select-item,
-                    .react-dropdown-select-input {
-                        color: $yellow;
-                    }
-
-                    .react-dropdown-select-option {
-                        border: 1px solid map-get($map, border);
-                    }
-
-                    .react-dropdown-select-item,
-                    .react-dropdown-select-item.react-dropdown-select-item-selected,
-                    .react-dropdown-select-item.react-dropdown-select-item-active {
-                        color: $yellow;
-                        border-bottom: 1px solid map-get($map, border);
-
-                        :hover {
-                            color: lighten(map-get($map, color), 20%);
-                        }
-                    }
-
-                    .react-dropdown-select-item.react-dropdown-select-item-selected,
-                    .react-dropdown-select-item.react-dropdown-select-item-active {
-                        font-weight: bold;
-                    }
-
-                    .react-drop-down-select {
-                        border-color: $yellow;
-                    }
 
                 }
             }

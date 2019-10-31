@@ -11,5 +11,7 @@ export {
 	filterByGender,
 	sortActorsByName,
 	sortActorsByHeight,
-	sortMoviesByDate
+	sortMoviesByDate,
+	sortActorsByGender,
+	getDistinctByGender
 } from '@utils/array.manipulation'
