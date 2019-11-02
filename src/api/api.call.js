@@ -58,7 +58,7 @@ export const getAllCharacters = async (
 		return proxyFilmInstance
 	} catch (err) {
 		logger.error(err)
-		throw new Error(apiError({ status: 500, url }))
+		throw new Error(apiError({ status: 500, err }))
 	}
 }
 
