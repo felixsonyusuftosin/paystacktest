@@ -3,8 +3,6 @@
  */
 
 import React from 'react'
-import Animate from 'animate.css-react'
-import 'animate.css/animate.css'
 
 import { Table } from '@home/table'
 import '@home/mid/styles/mid.scss'
@@ -18,17 +16,11 @@ export const Mid = props => {
 	return (
 		<div className="mid">
 			{actors && actors.length && (
-				<Animate
-					enter="fadeInDown"
-					leave="fadeOutUp"
-					appear="fadeInDown"
-					animate={true}>
-					<section className="statement-section">
-						<p className="word style" id="sentence">
-							{openingCrawl}
-						</p>
-					</section>
-				</Animate>
+				<section className="statement-section  animation-appear">
+					<p className="word style" id="sentence">
+						{openingCrawl}
+					</p>
+				</section>
 			)}
 			{!actors && <img src={Icon} alt="Star wars" />}
 			<section className="actor-list">

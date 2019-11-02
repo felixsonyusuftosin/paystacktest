@@ -27,11 +27,8 @@
 	"homepage": "git+https: //github.com/felixsonyusuftosin/paystacktest",
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.11.2",
-		"animate.css": "^3.7.2",
-		"animate.css-react": "^0.1.0",
 		"humps": "^2.0.1",
 		"react": "^16.10.2",
-		"react-animated-css": "^1.2.1",
 		"react-dom": "^16.10.2",
 		"react-router-dom": "^5.1.2"
 	},

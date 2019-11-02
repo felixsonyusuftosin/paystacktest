@@ -6,13 +6,14 @@ let timer
 export const Notification = ({
 	message,
 	errorType = 'error',
-	duration = 400000000000,
+	duration = 4000,
 	setMessage
 }) => {
 	useEffect(() => {
-		if (timer) {
-			clearTimeout(timer)
-		}
+		timer = setTimeout(() => {
+			setMessage('')
+		}, duration)
+		return () => clearTimeout(timer)
 	}, [timer])
 
 	const notificationstyle = {}
@@ -21,10 +22,6 @@ export const Notification = ({
 		notificationstyle.backgroundColor = '#FCB500'
 	}
 
-	timer = setTimeout(() => {
-		setMessage('')
-	}, duration)
-	console.log(message)
 	return (
 		message && (
 			<section className="notification" style={notificationstyle}>
