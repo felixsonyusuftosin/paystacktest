@@ -4,36 +4,37 @@
 
 // third party imports
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import 'react-notifications/lib/notifications.css'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 // Local Imports
 import '@home/select/styles/select.scss'
-import { dispatchActionsSync, dispatchActionsObservable } from '@store'
-import { getActorsAsObservable } from '@api'
+import { getAllCharacters } from '@api'
 import { SelectWidget } from '@widgets'
 
-export const Select = ({ films, pending, error }) => {
-	const dispatch = useDispatch()
-	const selectedMovie = useSelector(state =>
-		state.selectedMovie.payload ? state.selectedMovie.payload : null
-	)
-
+export const Select = ({
+	films,
+	pending,
+	error,
+	selectedMovie,
+	setSelectedMovie,
+	characterList,
+	setCharacterList,
+	setFullCharacterList
+}) => {
 	const onSelectChange = event => {
 		const { target = {} } = event
 		const { value } = target
 
 		const movieSelected =
 			films.find(film => +film.episode_id === +value) || null
-
-		dispatch(dispatchActionsSync('SELECTED_MOVIE', movieSelected))
+		setSelectedMovie(movieSelected)
 	}
 
 	const onSelectCancel = () => {
-		dispatch(dispatchActionsSync('SELECTED_MOVIE', null))
-		dispatch(dispatchActionsSync('ACTORS_LIST', null))
-		dispatch(dispatchActionsSync('FULL_ACTORS_LIST', null))
+		setSelectedMovie(null)
+		setCharacterList({ pending: false, payload: null, error: false })
+		setFullCharacterList(null)
 	}
 
 	useEffect(() => {
@@ -46,18 +47,31 @@ export const Select = ({ films, pending, error }) => {
 		}
 	}, [error])
 
-	const fetchNewActorsList = () => {
+	const fetchNewActorsList = async () => {
 		if (selectedMovie) {
-			dispatch(
-				dispatchActionsObservable('ACTORS_LIST', getActorsAsObservable, [
-					selectedMovie
-				])
-			)
-			dispatch(
-				dispatchActionsObservable('FULL_ACTORS_LIST', getActorsAsObservable, [
-					selectedMovie
-				])
-			)
+			setCharacterList({
+				...characterList,
+				pending: true,
+				payload: null,
+				error: false
+			})
+			try {
+				const characters = await getAllCharacters(selectedMovie)
+				setCharacterList({
+					...characterList,
+					payload: characters,
+					pending: false,
+					error: false
+				})
+				setFullCharacterList(characters)
+			} catch (err) {
+				setCharacterList({
+					...characterList,
+					error: err,
+					pending: false,
+					payload: null
+				})
+			}
 		}
 	}
 

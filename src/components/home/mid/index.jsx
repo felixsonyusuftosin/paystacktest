@@ -3,7 +3,6 @@
  */
 
 import React from 'react'
-import { useSelector } from 'react-redux'
 import Animate from 'animate.css-react'
 import 'animate.css/animate.css'
 
@@ -11,16 +10,10 @@ import { Table } from '@home/table'
 import '@home/mid/styles/mid.scss'
 import Icon from './starwars.png'
 
-export const Mid = () => {
-	const openingCrawl = useSelector(state =>
-		state.selectedMovie.payload
-			? state.selectedMovie.payload.opening_crawl
-			: ' '
-	)
-
-	const actors = useSelector(
-		state => state.actorsList.payload && state.actorsList.payload.characters
-	)
+export const Mid = props => {
+	const { characterList, selectedMovie } = props
+	const openingCrawl = selectedMovie ? selectedMovie.opening_crawl : ''
+	const actors = characterList.payload ? characterList.payload.characters : null
 
 	return (
 		<div className="mid">
@@ -39,7 +32,7 @@ export const Mid = () => {
 			)}
 			{!actors && <img src={Icon} alt="Star wars" />}
 			<section className="actor-list">
-				<Table />
+				<Table {...props} />
 			</section>
 		</div>
 	)

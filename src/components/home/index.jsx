@@ -1,51 +1,78 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector, shallowEqual } from 'react-redux'
-
 import { Select } from '@home/select'
 import { Mid } from '@home/mid'
 import { Footer } from '@home/footer'
-import { dispatchActionsAsync, dispatchActionsSync } from '@store'
 import { getFilmsAsync } from '@api'
 import { sortMoviesByDate } from '@utils'
 
+const moviesUrl = 'https://swapi.co/api/films'
+
 export const Home = () => {
 	const [selectedTheme, selectTheme] = useState('dark-theme')
-	const films = useSelector(state =>
-		state.fetchFilms ? state.fetchFilms.payload : null
-	)
-	const pending = useSelector(state => state.fetchFilms.pending, shallowEqual)
-	const error = useSelector(state => state.fetchFilms.error, shallowEqual)
-	const dispatch = useDispatch()
 
-	useEffect(() => {
-		if (!films && !error && !pending) {
-			dispatch(
-				dispatchActionsAsync('FETCH_FILMS', getFilmsAsync, [
-					'https://swapi.co/api/films'
-				])
-			)
-		}
+	const [films, setFilms] = useState({
+		payload: null,
+		pending: false,
+		error: false
 	})
 
+	const [selectedMovie, setSelectedMovie] = useState(null)
+	const [characterList, setCharacterList] = useState({
+		payload: null,
+		pending: false,
+		error: false
+	})
+	const [fullCharacterList, setFullCharacterList] = useState(null)
+
+	getFilmsAsync(moviesUrl)
+
 	useEffect(() => {
-		if (films) {
-			const sortedFilms = sortMoviesByDate(films)
-			dispatch(dispatchActionsSync('FETCH_FILMS', sortedFilms))
+		const fetchFilms = async () => {
+			if (!films.payload && !films.error && !films.pending) {
+				setFilms({ ...films, pending: true })
+				try {
+					const films = await getFilmsAsync(moviesUrl)
+					setFilms({
+						...films,
+						pending: false,
+						payload: sortMoviesByDate(films)
+					})
+				} catch (error) {
+					setFilms({
+						payload: null,
+						pending: false,
+						error
+					})
+				}
+			}
 		}
-	}, [films])
+		fetchFilms()
+	})
 
 	return (
 		<div className={selectedTheme}>
 			<div className="container ">
 				<section className="main">
 					<Select
-						films={films}
-						pending={pending}
+						selectedMovie={selectedMovie}
+						setSelectedMovie={setSelectedMovie}
+						characterList={characterList}
+						setCharacterList={setCharacterList}
+						fullCharacterList={fullCharacterList}
+						setFullCharacterList={setFullCharacterList}
+						films={films.payload || []}
+						pending={films.pending}
 						selectedTheme={selectedTheme}
 						selectTheme={selectTheme}
-						error={error}
+						error={films.error}
 					/>
-					<Mid />
+					<Mid
+						selectedMovie={selectedMovie}
+						characterList={characterList}
+						setCharacterList={setCharacterList}
+						fullCharacterList={fullCharacterList}
+						setFullCharacterList={setFullCharacterList}
+					/>
 				</section>
 			</div>
 			<Footer />
