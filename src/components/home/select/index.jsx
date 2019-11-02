@@ -4,74 +4,83 @@
 
 // third party imports
 import React, { useEffect } from 'react'
-import { Select as SelectDropDown } from 'react-dropdown-select'
-import { useDispatch, useSelector } from 'react-redux'
-import 'react-notifications/lib/notifications.css'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 // Local Imports
 import '@home/select/styles/select.scss'
-import { dispatchActionsSync, dispatchActionsObservable } from '@store'
-import { getActorsAsObservable } from '@api'
+import { getAllCharacters } from '@api'
+import { SelectWidget } from '@widgets'
 
-export const Select = ({ films, pending, error }) => {
-	const dispatch = useDispatch()
-	const selectedMovie = useSelector(state =>
-		state.selectedMovie.payload ? state.selectedMovie.payload : null
-	)
+export const Select = ({
+	films,
+	setErrorMessage,
+	pending,
+	selectedMovie,
+	setSelectedMovie,
+	characterList,
+	setCharacterList,
+	setFullCharacterList
+}) => {
+	const onSelectChange = event => {
+		const { target = {} } = event
+		const { value } = target
 
-	const onSelectChange = value => {
-		dispatch(dispatchActionsSync('SELECTED_MOVIE', value[0]))
+		const movieSelected =
+			films.find(film => +film.episode_id === +value) || null
+		setSelectedMovie(movieSelected)
 	}
 
-	const onClear = () => {
-		dispatch(dispatchActionsSync('SELECTED_MOVIE', null))
-		dispatch(dispatchActionsSync('ACTORS_LIST', null))
-		dispatch(dispatchActionsSync('FULL_ACTORS_LIST', null))
+	const onSelectCancel = () => {
+		setSelectedMovie(null)
+		setCharacterList({ pending: false, payload: null, error: false })
+		setFullCharacterList(null)
 	}
 
 	useEffect(() => {
 		fetchNewActorsList()
 	}, [selectedMovie])
 
-	useEffect(() => {
-		if (error) {
-			NotificationManager.error(error, 'Whoops')
-		}
-	}, [error])
-
-	const fetchNewActorsList = () => {
+	const fetchNewActorsList = async () => {
 		if (selectedMovie) {
-			dispatch(
-				dispatchActionsObservable('ACTORS_LIST', getActorsAsObservable, [
-					selectedMovie
-				])
-			)
-			dispatch(
-				dispatchActionsObservable('FULL_ACTORS_LIST', getActorsAsObservable, [
-					selectedMovie
-				])
-			)
+			setCharacterList({
+				...characterList,
+				pending: true,
+				payload: null,
+				error: false
+			})
+			try {
+				const characters = await getAllCharacters(selectedMovie)
+				setCharacterList({
+					...characterList,
+					payload: characters,
+					pending: false,
+					error: false
+				})
+				setFullCharacterList(characters)
+			} catch (err) {
+				setErrorMessage(err)
+				setCharacterList({
+					...characterList,
+					error: err,
+					pending: false,
+					payload: null
+				})
+			}
 		}
 	}
 
 	return (
 		<div className="top">
 			<div className="select-bar">
-				<SelectDropDown
-					className="custom-select"
+				<SelectWidget
 					onChange={onSelectChange}
-					loading={pending && !error}
+					onCancel={onSelectCancel}
+					loading={pending.toString()}
+					valuename="episode_id"
+					labelname="title"
+					placeholder="Select movie ..."
 					options={films}
-					disabled={pending}
-					clearable={true}
-					sortBy="release_date"
-					labelField="title"
-					valueField="episode_id"
-					onClearAll={onClear}
 				/>
 			</div>
-			<NotificationContainer />
 		</div>
 	)
 }

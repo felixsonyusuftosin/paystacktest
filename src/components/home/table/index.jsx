@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { Select as SelectDropDown } from 'react-dropdown-select'
-import { useSelector, useDispatch } from 'react-redux'
 
-import { Loader } from '@widgets'
-import { filterByGender, sortActorsByName, sortActorsByHeight } from '@utils'
-import { dispatchActionsSync } from '@store'
+import { Loader, SelectWidget } from '@widgets'
+import {
+	filterByGender,
+	sortActorsByName,
+	sortActorsByHeight,
+	sortActorsByGender,
+	getDistinctByGender
+} from '@utils'
 import '@home/table/styles/table.scss'
 
 const genderIcon = {
@@ -14,53 +17,57 @@ const genderIcon = {
 	'n/a': 'question',
 	none: 'question-circle'
 }
-const genderOptions = [
-	{ label: 'Male', value: 'male' },
-	{ label: 'Female', value: 'female' },
-	{ label: 'Hermaphrodite', value: 'hermaphrodite' },
-	{ label: 'Not Specified', value: 'n/a' },
-	{ label: 'None', value: 'none' }
-]
 
-export const Table = () => {
-	const dispatch = useDispatch()
+const CMToInchesRatio = 25.4
+const CMToFeetRatio = 30.4
 
-	let totalHeightCm = 0
-	let totalHeightIn = 0
-	let totalHeightft = 0
+export const Table = ({
+	selectedMovie,
+	characterList,
+	setCharacterList,
+	fullCharacterList
+}) => {
+	const actorsPending = characterList.pending
+	const actorsError = characterList.error
+	const actors = characterList.payload ? characterList.payload.characters : null
+	const movie = selectedMovie || {}
+	const fullActorsList = fullCharacterList ? fullCharacterList : null
 
-	const actorsPending = useSelector(state => state.actorsList.pending)
-	const actorsError = useSelector(state => state.actorsList.error)
-	const actors = useSelector(state =>
-		state.actorsList.payload ? state.actorsList.payload.characters : null
-	)
-	const movie = useSelector(state =>
-		state.actorsList.payload ? state.actorsList.payload : null
-	)
+	const genderOptions = () => {
+		if (fullActorsList) {
+			const { characters } = fullActorsList
 
-	if (actors && actors.length) {
-		const reduced = actors.reduce((total, currentValue) => {
-			const height = isNaN(+currentValue.height) ? 0 : +currentValue.height
-
-			return total + height
-		}, 0)
-
-		totalHeightCm = reduced
-		totalHeightIn = parseInt(reduced / 25.4, 10)
-		totalHeightft = parseInt(reduced / 30.4, 10)
+			if (characters && characters.length) {
+				return getDistinctByGender(characters, 'gender')
+			}
+			return []
+		}
+		return []
 	}
 
-	const formatComputedHeight = `${totalHeightCm}cm (${totalHeightft}ft/${totalHeightIn}in)`
+	const computedHeight = () => {
+		if (actors && actors.length) {
+			return actors.reduce((total, currentValue) => {
+				const height = isNaN(+currentValue.height) ? 0 : +currentValue.height
+				return total + height
+			}, 0)
+		}
+		return 0
+	}
 
-	const fullActorsList = useSelector(state =>
-		state.fullActorsList ? state.fullActorsList.payload : null
-	)
+	const totalHeightCm = computedHeight()
+	const totalHeightIn = parseInt(computedHeight() / CMToInchesRatio)
+	const totalHeightFt = parseInt(computedHeight() / CMToFeetRatio)
 
+	const formatComputedHeight = `${totalHeightCm}cm (${totalHeightFt}ft/${totalHeightIn}in)`
 	const [sortParameter, setSorting] = useState({
 		name: {
 			order: 'descending'
 		},
 		height: {
+			order: 'descending'
+		},
+		gender: {
 			order: 'descending'
 		},
 		activeSort: ''
@@ -73,11 +80,30 @@ export const Table = () => {
 			const sortedActors = sortActorsByName([...actors], order === 'ascending')
 			const sortedActorsFilm = { ...movie, characters: sortedActors }
 
-			dispatch(dispatchActionsSync('ACTORS_LIST', sortedActorsFilm))
+			setCharacterList({ ...characterList, payload: sortedActorsFilm })
 			setSorting({
 				...sortParameter,
 				name: { order },
 				activeSort: 'name'
+			})
+		}
+	}
+
+	const sortTableByGender = () => {
+		if (actors) {
+			const order =
+				sortParameter.gender.order === 'ascending' ? 'descending' : 'ascending'
+			const sortedActors = sortActorsByGender(
+				[...actors],
+				order === 'ascending'
+			)
+			const sortedActorsFilm = { ...movie, characters: sortedActors }
+
+			setCharacterList({ ...characterList, payload: sortedActorsFilm })
+			setSorting({
+				...sortParameter,
+				gender: { order },
+				activeSort: 'gender'
 			})
 		}
 	}
@@ -92,7 +118,7 @@ export const Table = () => {
 			)
 			const sortedActorsFilm = { ...movie, characters: sortedActors }
 
-			dispatch(dispatchActionsSync('ACTORS_LIST', sortedActorsFilm))
+			setCharacterList({ ...characterList, payload: sortedActorsFilm })
 			setSorting({
 				...sortParameter,
 				height: { order },
@@ -101,23 +127,26 @@ export const Table = () => {
 		}
 	}
 
-	const onFilterByGender = gender => {
-		if (gender.length) {
-			const filteredActors = filterByGender(
-				gender[0].value,
-				fullActorsList.characters
-			)
-			const filteredActorsFilm = { ...movie, characters: filteredActors }
+	const onFilterByGender = $event => {
+		const { target } = $event
+		const { value } = target
+		const filteredActors = filterByGender(value, fullActorsList.characters)
+		const filteredActorsFilm = { ...movie, characters: filteredActors }
 
-			dispatch(dispatchActionsSync('ACTORS_LIST', filteredActorsFilm))
-		}
+		setCharacterList({ ...characterList, payload: filteredActorsFilm })
 	}
 
 	const clearGenderFilter = () => {
-		dispatch(dispatchActionsSync('ACTORS_LIST', fullActorsList))
+		setCharacterList({ ...characterList, payload: fullActorsList })
 	}
 
 	const componentUiState = {
+		isAscendingSortByGender:
+			sortParameter.activeSort === 'gender' &&
+			sortParameter.gender.order === 'ascending',
+		isDescendingSortByGender:
+			sortParameter.activeSort === 'gender' &&
+			sortParameter.gender.order === 'descending',
 		isAscendingSortByName:
 			sortParameter.activeSort === 'name' &&
 			sortParameter.name.order === 'ascending',
@@ -137,6 +166,8 @@ export const Table = () => {
 	}
 
 	const {
+		isAscendingSortByGender,
+		isDescendingSortByGender,
 		isAscendingSortByHeight,
 		isAscendingSortByName,
 		isDescendingSortByHeight,
@@ -156,14 +187,18 @@ export const Table = () => {
 					</p>
 					<div className="gender-bar-holder">
 						<div className="select-bar  gender-bar ">
-							<SelectDropDown
-								placeholder="Select gender to filter table"
-								options={genderOptions}
-								labelField="label"
-								valueField="value"
-								onClearAll={clearGenderFilter}
+							<SelectWidget
+								style={{
+									borderColor: '#666',
+									boxSizing: 'border-box',
+									padding: '0px 10px',
+									color: '#666',
+									fontSize: '0.9rem',
+									height: '35px'
+								}}
 								onChange={onFilterByGender}
-								clearable={true}
+								onCancel={clearGenderFilter}
+								options={genderOptions()}
 							/>
 						</div>
 					</div>
@@ -173,8 +208,12 @@ export const Table = () => {
 			<section className="table">
 				{actorsListIsReady && (
 					<div className="row table-header">
-						<div className="column">
-							<span> Gender</span>
+						<div className="column" onClick={sortTableByGender}>
+							<span>
+								Gender
+								{isAscendingSortByGender && <i className="fa fa-arrow-up" />}
+								{isDescendingSortByGender && <i className="fa fa-arrow-down" />}
+							</span>
 						</div>
 						<div className="column" onClick={sortTableByName}>
 							<span>
@@ -196,10 +235,18 @@ export const Table = () => {
 					? actors.map((actor, index) => (
 							<div className="row" key={index}>
 								<div className="column">
-									<i className={`fa fa-${genderIcon[actor.gender]}`}></i>{' '}
+									<i
+										title={actor.gender}
+										className={`fa fa-${genderIcon[actor.gender]}`}></i>{' '}
 								</div>
-								<div className="column"> {actor.name}</div>
-								<div className="column"> {actor.height} </div>
+								<div title={actor.name} className="column">
+									{' '}
+									{actor.name}
+								</div>
+								<div title={actor.height} className="column">
+									{' '}
+									{actor.height}{' '}
+								</div>
 							</div>
 					  ))
 					: null}
