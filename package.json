@@ -27,6 +27,7 @@
 	"homepage": "git+https: //github.com/felixsonyusuftosin/paystacktest",
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.11.2",
+		"@types/gh-pages": "^2.0.1",
 		"animate.css": "^3.7.2",
 		"animate.css-react": "^0.1.0",
 		"cache-polyfill": "^1.0.1",
