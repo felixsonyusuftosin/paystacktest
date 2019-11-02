@@ -10,7 +10,7 @@ const moviesUrl = 'https://swapi.co/api/films'
 
 export const Home = () => {
 	const [selectedTheme, selectTheme] = useState('dark-theme')
-	const [message, setMessage] = useState('hah you have encountered an error')
+	const [message, setMessage] = useState('')
 	const [films, setFilms] = useState({
 		payload: null,
 		pending: false,

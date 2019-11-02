@@ -7,8 +7,6 @@
 		"test": "jest",
 		"start": "webpack-dev-server --env.NODE_ENV=develpment --mode development",
 		"build": "webpack --env.NODE_ENV=production --mode production",
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build",
 		"serve": "serve -s build"
 	},
 	"repository": {
