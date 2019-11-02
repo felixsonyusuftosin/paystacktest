@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs'
 import { apiError } from '@api/error'
 import { logger } from '@utils'
 import { getCachedApiRequests, setCachedApiRequests } from '@api'
@@ -11,85 +10,52 @@ export const fetchOptions = {
 	body: {}
 }
 
-export const getActorsAsObservable = (
+export const getAllCharacters = async (
 	filmInstance,
 	modifiedFetchOptions = {}
 ) => {
 	try {
-		return new Observable(subscriber => {
-			const {
-				title,
-				episode_id,
-				opening_crawl,
-				director,
-				producer,
-				release_date
-			} = filmInstance
-			let proxyFilmInstance = {
-				title,
-				episode_id,
-				opening_crawl,
-				director,
-				producer,
-				release_date,
-				characters: []
-			}
-			const interceptCachedRequest = getCachedApiRequests(
-				`${filmInstance.title}${filmInstance.episode_id.toString()}`
-			)
+		// use a meaningfull key to label to session key
+		const key = `${filmInstance.title}${filmInstance.episode_id.toString()}`
+		let proxyFilmInstance = { ...filmInstance, characters: [] } // create a proxy filminstance to return as resolved list
+		const interceptedCachedRequest = getCachedApiRequests(key)
 
-			if (interceptCachedRequest) {
-				subscriber.next(interceptCachedRequest)
-				return
-			}
-			const mergedFetchOptions = { ...fetchOptions, ...modifiedFetchOptions }
+		// intercept reqiest and return the cached response from session storage
+		if (interceptedCachedRequest) {
+			return interceptedCachedRequest
+		}
 
-			const { headers } = mergedFetchOptions
-			const { characters } = filmInstance
+		const mergedFetchOptions = { ...fetchOptions, ...modifiedFetchOptions }
+		const { headers } = mergedFetchOptions
+		const { characters } = filmInstance
 
+		const getArrayOfResponseCharacters = async () =>
 			characters.map(async url => {
-				const charactersAsJson = await fetch(url, headers)
-
-				if (!charactersAsJson) {
-					subscriber.error(apiError({ status: 500, url }))
-					return
-				}
-				const { status, ok } = charactersAsJson
-
+				const character = await fetch(url, headers)
+				const { status, ok } = character
 				if (status == 404) {
-					subscriber.next(proxyFilmInstance)
-					setCachedApiRequests(
-						`${filmInstance.title}${filmInstance.episode_id.toString()}`,
-						proxyFilmInstance
-					)
-
-					return
+					return {}
 				}
 				if (!ok) {
-					subscriber.error(apiError(status, url))
-					return
+					throw new Error(apiError({ status, url: 'Error fetching character' }))
 				}
-				const character = await charactersAsJson.json()
-
-				if (!character) {
-					subscriber.error(apiError({ status: 500, url }))
-				}
-				const newlyResolvedCharacters = [
-					...proxyFilmInstance.characters,
-					character
-				]
-
-				proxyFilmInstance = {
-					...proxyFilmInstance,
-					characters: newlyResolvedCharacters
-				}
-				subscriber.next(proxyFilmInstance)
-				setCachedApiRequests(
-					`${filmInstance.title}${filmInstance.episode_id.toString()}`,
-					proxyFilmInstance
-				)
+				return character.json()
 			})
-		})
+
+		const arrayOfResponseCharacters = await getArrayOfResponseCharacters()
+		const arrayOfCharacters = await Promise.all(arrayOfResponseCharacters)
+
+		if (!arrayOfCharacters) {
+			throw new Error(apiError, { status: 500, url: 'Error reading data ' })
+		}
+
+		proxyFilmInstance = {
+			...proxyFilmInstance,
+			characters: arrayOfCharacters
+		}
+
+		setCachedApiRequests(key, proxyFilmInstance)
+		return proxyFilmInstance
 	} catch (err) {
 		logger.error(err)
 		throw new Error(apiError({ status: 500, url }))
