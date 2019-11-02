@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 
 import { Loader, SelectWidget } from '@widgets'
 import {
@@ -9,7 +8,6 @@ import {
 	sortActorsByGender,
 	getDistinctByGender
 } from '@utils'
-import { dispatchActionsSync } from '@store'
 import '@home/table/styles/table.scss'
 
 const genderIcon = {
@@ -23,25 +21,26 @@ const genderIcon = {
 const CMToInchesRatio = 25.4
 const CMToFeetRatio = 30.4
 
-export const Table = () => {
-	const dispatch = useDispatch()
-	const actorsPending = useSelector(state => state.actorsList.pending)
-	const actorsError = useSelector(state => state.actorsList.error)
-	const actors = useSelector(state =>
-		state.actorsList.payload ? state.actorsList.payload.characters : null
-	)
-	const movie = useSelector(state =>
-		state.actorsList.payload ? state.actorsList.payload : null
-	)
-	const fullActorsList = useSelector(state =>
-		state.fullActorsList ? state.fullActorsList.payload : null
-	)
+export const Table = ({
+	selectedMovie,
+	characterList,
+	setCharacterList,
+	fullCharacterList
+}) => {
+	const actorsPending = characterList.pending
+	const actorsError = characterList.error
+	const actors = characterList.payload ? characterList.payload.characters : null
+	const movie = selectedMovie || {}
+	const fullActorsList = fullCharacterList ? fullCharacterList : null
 
 	const genderOptions = () => {
-		const { characters } = fullActorsList
+		if (fullActorsList) {
+			const { characters } = fullActorsList
 
-		if (characters && characters.length) {
-			return getDistinctByGender(characters, 'gender')
+			if (characters && characters.length) {
+				return getDistinctByGender(characters, 'gender')
+			}
+			return []
 		}
 		return []
 	}
@@ -81,7 +80,7 @@ export const Table = () => {
 			const sortedActors = sortActorsByName([...actors], order === 'ascending')
 			const sortedActorsFilm = { ...movie, characters: sortedActors }
 
-			dispatch(dispatchActionsSync('ACTORS_LIST', sortedActorsFilm))
+			setCharacterList({ ...characterList, payload: sortedActorsFilm })
 			setSorting({
 				...sortParameter,
 				name: { order },
@@ -89,6 +88,7 @@ export const Table = () => {
 			})
 		}
 	}
+
 	const sortTableByGender = () => {
 		if (actors) {
 			const order =
@@ -99,7 +99,7 @@ export const Table = () => {
 			)
 			const sortedActorsFilm = { ...movie, characters: sortedActors }
 
-			dispatch(dispatchActionsSync('ACTORS_LIST', sortedActorsFilm))
+			setCharacterList({ ...characterList, payload: sortedActorsFilm })
 			setSorting({
 				...sortParameter,
 				gender: { order },
@@ -107,6 +107,7 @@ export const Table = () => {
 			})
 		}
 	}
+
 	const sortTableByHeight = () => {
 		if (actors) {
 			const order =
@@ -117,7 +118,7 @@ export const Table = () => {
 			)
 			const sortedActorsFilm = { ...movie, characters: sortedActors }
 
-			dispatch(dispatchActionsSync('ACTORS_LIST', sortedActorsFilm))
+			setCharacterList({ ...characterList, payload: sortedActorsFilm })
 			setSorting({
 				...sortParameter,
 				height: { order },
@@ -132,11 +133,11 @@ export const Table = () => {
 		const filteredActors = filterByGender(value, fullActorsList.characters)
 		const filteredActorsFilm = { ...movie, characters: filteredActors }
 
-		dispatch(dispatchActionsSync('ACTORS_LIST', filteredActorsFilm))
+		setCharacterList({ ...characterList, payload: filteredActorsFilm })
 	}
 
 	const clearGenderFilter = () => {
-		dispatch(dispatchActionsSync('ACTORS_LIST', fullActorsList))
+		setCharacterList({ ...characterList, payload: fullActorsList })
 	}
 
 	const componentUiState = {

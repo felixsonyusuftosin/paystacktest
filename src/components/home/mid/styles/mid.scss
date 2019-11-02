@@ -2,6 +2,47 @@
 @import './light-theme-mid.scss';
 @import '../../../../scss/variables.scss';
 
+
+// Animations 
+.animation-appear {
+    animation-delay: 0s, 0s;
+    animation-duration: 1000ms, 600ms;
+    animation-name: appear, dropin;
+    -webkit-animation-delay: 0s, 0s;
+    -webkit-animation-duration: 1000ms, 600ms;
+    -webkit-animation-name: appear, dropin;
+}
+
+@keyframes disappear {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes dropin {
+    from {
+        margin-top: -400px;
+    }
+
+    to {
+        margin-top: 0px;
+    }
+}
+
 @mixin midThemable($theme-name, $theme-map) {
 
     @keyframes blinker {
@@ -63,21 +104,6 @@
                         letter-spacing: 2px;
                         text-rendering: optimizeLegibility;
                     }
-                }
-
-                .word::after {
-                    @include super;
-                    letter-spacing: 2px;
-                    transition: all 0s !important;
-                    animation: blinker 1s linear infinite;
-                    -webkit-animation: blinker 1s linear infinite;
-                    text-rendering: optimizeLegibility;
-                    content: "_" !important;
-                    color: $light-yellow;
-                    -webkit-transition: all 0s !important;
-                    -moz-transition: all 0s !important;
-                    -ms-transition: all 0s !important;
-                    -o-transition: all 0s !important;
                 }
 
 

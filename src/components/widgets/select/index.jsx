@@ -44,7 +44,6 @@ export const SelectWidget = props => {
 			className={disabled ? 'custom-select disabled' : 'custom-select'}
 			style={style}>
 			<select
-				defaultValue="-1"
 				disabled={disabled}
 				{...props}
 				className="select"

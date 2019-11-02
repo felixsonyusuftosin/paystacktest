@@ -13,18 +13,22 @@ $no-sizing: 0px;
 
 ///  -------- Colors  --------
 $dark: #000;
-$dark-2: lighten(#000, 10%);
-$dark-3: lighten(#000, 20%);
-$dark-4: lighten(#000, 30%);
-$dark-5: lighten(#000, 40%);
-$dark-6: lighten(#000, 50%);
-$dark-7: lighten(#000, 60%);
-$dark-8: lighten(#000, 70%);
-$faded: lighten(#000, 90%);
+$error: #FF8484;
 $light: #fff;
 $yellow: #FCB500;
-$light-yellow:lighten(#FCB500, 10%);
-$mid-yellow: lighten(#FCB500, 20%);
+
+$dark-2: lighten($dark, 10%);
+$dark-3: lighten($dark, 20%);
+$dark-4: lighten($dark, 30%);
+$dark-5: lighten($dark, 40%);
+$dark-6: lighten($dark, 50%);
+$dark-7: lighten($dark, 60%);
+$dark-8: lighten($dark, 70%);
+$faded: lighten($dark, 90%);
+$light-yellow:lighten($yellow, 10%);
+$mid-yellow: lighten($yellow, 20%);
+$light-error: lighten($error, 10%);
+$faded-error: lighten($error, 40%);
 
 
 ///  -------- table  --------

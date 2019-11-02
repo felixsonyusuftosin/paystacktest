@@ -3,7 +3,7 @@
  */
 
 export { apiError } from '@api/error'
-export { getActorsAsObservable, getFilmsAsync } from '@api/api.call'
+export { getAllCharacters, getFilmsAsync } from '@api/api.call'
 export {
 	getCachedApiRequests,
 	setCachedApiRequests

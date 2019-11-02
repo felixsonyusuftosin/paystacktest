@@ -27,17 +27,10 @@
 	"homepage": "git+https: //github.com/felixsonyusuftosin/paystacktest",
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.11.2",
-		"animate.css": "^3.7.2",
-		"animate.css-react": "^0.1.0",
 		"humps": "^2.0.1",
 		"react": "^16.10.2",
-		"react-animated-css": "^1.2.1",
 		"react-dom": "^16.10.2",
-		"react-notifications": "^1.4.3",
-		"react-redux": "^7.1.1",
-		"react-router-dom": "^5.1.2",
-		"redux": "^4.0.4",
-		"rxjs": "^6.5.3"
+		"react-router-dom": "^5.1.2"
 	},
 	"jest": {
 		"setupFilesAfterEnv": [
@@ -78,8 +71,6 @@
 		"react-hot-loader": "^4.12.15",
 		"react-router-redux": "^4.0.8",
 		"react-test-renderer": "^16.10.2",
-		"redux-logger": "^3.0.6",
-		"redux-thunk": "^2.3.0",
 		"sass": "^1.23.0",
 		"sass-loader": "^8.0.0",
 		"serve": "^11.2.0",

@@ -1,0 +1,31 @@
+@import '../../../scss/variables.scss';
+
+.notification {
+  position: fixed;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  @include h2;
+  left: 0px;
+  top: 0px;
+  width: 40%;
+  background-color: $error;
+  color: $light;
+  z-index: 1000;
+  min-width: 500px;
+  padding: 0px $small;
+
+  i {
+    margin-left: auto;
+    cursor: pointer;
+    color: $light;
+    font-size: 1.5rem;
+
+  }
+
+  span {
+    text-transform: capitalize;
+  }
+
+}
