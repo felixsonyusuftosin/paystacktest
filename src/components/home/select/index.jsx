@@ -4,8 +4,6 @@
 
 // third party imports
 import React, { useEffect } from 'react'
-import 'react-notifications/lib/notifications.css'
-import { NotificationContainer, NotificationManager } from 'react-notifications'
 
 // Local Imports
 import '@home/select/styles/select.scss'
@@ -14,8 +12,8 @@ import { SelectWidget } from '@widgets'
 
 export const Select = ({
 	films,
+	setErrorMessage,
 	pending,
-	error,
 	selectedMovie,
 	setSelectedMovie,
 	characterList,
@@ -41,12 +39,6 @@ export const Select = ({
 		fetchNewActorsList()
 	}, [selectedMovie])
 
-	useEffect(() => {
-		if (error) {
-			NotificationManager.error(error, 'Whoops')
-		}
-	}, [error])
-
 	const fetchNewActorsList = async () => {
 		if (selectedMovie) {
 			setCharacterList({
@@ -65,6 +57,7 @@ export const Select = ({
 				})
 				setFullCharacterList(characters)
 			} catch (err) {
+				setErrorMessage(err)
 				setCharacterList({
 					...characterList,
 					error: err,
@@ -88,7 +81,6 @@ export const Select = ({
 					options={films}
 				/>
 			</div>
-			<NotificationContainer />
 		</div>
 	)
 }

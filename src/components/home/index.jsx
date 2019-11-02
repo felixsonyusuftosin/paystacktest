@@ -4,12 +4,13 @@ import { Mid } from '@home/mid'
 import { Footer } from '@home/footer'
 import { getFilmsAsync } from '@api'
 import { sortMoviesByDate } from '@utils'
+import { Notification } from '@widgets'
 
 const moviesUrl = 'https://swapi.co/api/films'
 
 export const Home = () => {
 	const [selectedTheme, selectTheme] = useState('dark-theme')
-
+	const [message, setMessage] = useState('hah you have encountered an error')
 	const [films, setFilms] = useState({
 		payload: null,
 		pending: false,
@@ -38,6 +39,7 @@ export const Home = () => {
 						payload: sortMoviesByDate(films)
 					})
 				} catch (error) {
+					setMessage(error)
 					setFilms({
 						payload: null,
 						pending: false,
@@ -51,10 +53,12 @@ export const Home = () => {
 
 	return (
 		<div className={selectedTheme}>
+			<Notification message={message} setMessage={setMessage} />
 			<div className="container ">
 				<section className="main">
 					<Select
 						selectedMovie={selectedMovie}
+						setErrorMessage={setMessage}
 						setSelectedMovie={setSelectedMovie}
 						characterList={characterList}
 						setCharacterList={setCharacterList}
@@ -67,6 +71,7 @@ export const Home = () => {
 						error={films.error}
 					/>
 					<Mid
+						setErrorMessage={setMessage}
 						selectedMovie={selectedMovie}
 						characterList={characterList}
 						setCharacterList={setCharacterList}
