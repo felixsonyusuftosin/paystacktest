@@ -7,10 +7,11 @@ import { sortMoviesByDate } from '@utils'
 import { Notification } from '@widgets'
 
 const moviesUrl = 'https://swapi.co/api/films'
+let timer
 
 export const Home = () => {
 	const [selectedTheme, selectTheme] = useState('dark-theme')
-	const [message, setMessage] = useState('')
+	const [message, setActiveMessage] = useState('')
 	const [films, setFilms] = useState({
 		payload: null,
 		pending: false,
@@ -24,6 +25,14 @@ export const Home = () => {
 		error: false
 	})
 	const [fullCharacterList, setFullCharacterList] = useState(null)
+
+	const setMessage = msg => {
+		setActiveMessage(msg)
+
+		timer = setTimeout(() => {
+			setActiveMessage('')
+		}, 4000)
+	}
 
 	getFilmsAsync(moviesUrl)
 
@@ -39,11 +48,11 @@ export const Home = () => {
 						payload: sortMoviesByDate(films)
 					})
 				} catch (error) {
-					setMessage(error)
+					setMessage(error.message)
 					setFilms({
 						payload: null,
 						pending: false,
-						error
+						error: error.message
 					})
 				}
 			}
@@ -53,7 +62,7 @@ export const Home = () => {
 
 	return (
 		<div className={selectedTheme}>
-			<Notification message={message} setMessage={setMessage} />
+			<Notification message={message} setMessage={setActiveMessage} />
 			<div className="container ">
 				<section className="main">
 					<Select
@@ -76,7 +85,6 @@ export const Home = () => {
 						characterList={characterList}
 						setCharacterList={setCharacterList}
 						fullCharacterList={fullCharacterList}
-						setFullCharacterList={setFullCharacterList}
 					/>
 				</section>
 			</div>

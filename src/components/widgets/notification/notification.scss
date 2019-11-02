@@ -8,9 +8,9 @@
   box-sizing: border-box;
   @include h2;
   left: 0px;
-  top: 0px;
+  bottom: 0px;
   width: 40%;
-  background-color: $error;
+  background-color: darken($error, 20%);
   color: $light;
   z-index: 1000;
   min-width: 500px;

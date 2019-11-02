@@ -272,7 +272,7 @@ export const Table = ({
 				)}
 
 				{actorsListErroredWhileFetching && (
-					<h3 className="no-data">{actorsError}</h3>
+					<h3 className="no-data">Nothing here ...</h3>
 				)}
 			</section>
 		</React.Fragment>

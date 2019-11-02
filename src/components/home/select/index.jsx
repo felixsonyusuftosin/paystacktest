@@ -57,10 +57,10 @@ export const Select = ({
 				})
 				setFullCharacterList(characters)
 			} catch (err) {
-				setErrorMessage(err)
+				setErrorMessage(err.message)
 				setCharacterList({
 					...characterList,
-					error: err,
+					error: err.message,
 					pending: false,
 					payload: null
 				})
