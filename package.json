@@ -48,6 +48,8 @@
 		"@babel/preset-react": "^7.6.3",
 		"@babel/runtime": "^7.6.3",
 		"@hot-loader/react-dom": "^16.10.2",
+		"@types/redux-logger": "^3.0.7",
+		"@types/redux-thunk": "^2.1.0",
 		"babel-loader": "^8.0.6",
 		"cache-polyfill": "^1.0.1",
 		"css-loader": "^3.2.0",
