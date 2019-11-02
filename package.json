@@ -27,6 +27,7 @@
 	"homepage": "git+https: //github.com/felixsonyusuftosin/paystacktest",
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^5.11.2",
+		"@types/react-redux": "^7.1.5",
 		"humps": "^2.0.1",
 		"react": "^16.10.2",
 		"react-dom": "^16.10.2",
