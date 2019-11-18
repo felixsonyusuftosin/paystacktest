@@ -34,8 +34,6 @@ export const Home = () => {
 		}, 4000)
 	}
 
-	getFilmsAsync(moviesUrl)
-
 	useEffect(() => {
 		const fetchFilms = async () => {
 			if (!films.payload && !films.error && !films.pending) {
